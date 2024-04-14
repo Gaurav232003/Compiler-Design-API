@@ -1,54 +1,56 @@
 const fs = require('fs');
-const http = require('http');
-const url = require('url');
+const express = require('express');
 
+const app = express();
 
+const exp1 = fs.readFileSync('./cdexp/exp1.cpp', 'utf-8');
+const exp2 = fs.readFileSync('./cdexp/exp2.txt', 'utf-8');
+const exp3 = fs.readFileSync('./cdexp/exp3.txt', 'utf-8');
+const exp5 = fs.readFileSync('./cdexp/exp5.cpp', 'utf-8');
+const exp6 = fs.readFileSync('./cdexp/exp6.cpp', 'utf-8');
+const exp7 = fs.readFileSync('./cdexp/exp7.txt', 'utf-8');
+const exp8 = fs.readFileSync('./cdexp/exp8.cpp', 'utf-8');
+const exp9 = fs.readFileSync('./cdexp/exp9.c', 'utf-8');
 
-const exp1 = fs.readFileSync('./cdexp/exp1.cpp','utf-8',)
-const exp2 = fs.readFileSync('./cdexp/exp2.txt','utf-8',)
-const exp3 = fs.readFileSync('./cdexp/exp3.txt','utf-8',)
-const exp5 = fs.readFileSync('./cdexp/exp5.cpp','utf-8',)
-const exp6 = fs.readFileSync('./cdexp/exp6.cpp','utf-8',)
-const exp7 = fs.readFileSync('./cdexp/exp7.txt','utf-8',)
-const exp8 = fs.readFileSync('./cdexp/exp8.cpp','utf-8',)
-const exp9 = fs.readFileSync('./cdexp/exp9.c','utf-8',)
-//SERVER
-
-const server = http.createServer((req, res) =>{
-    const pathName = req.url;
-    if(pathName ==='/exp1'){
-        res.end(exp1);
-    }
-    else if(pathName ==='/exp2'){
-        res.end(exp2);
-    }
-    else if(pathName ==='/exp3'){
-        res.end(exp3);
-    }
-    else if(pathName ==='/exp5'){
-        res.end(exp5);
-    }
-    else if(pathName ==='/exp6'){
-        res.end(exp6);
-    }
-    else if(pathName ==='/exp7'){
-        res.end(exp7);
-    }
-    else if(pathName ==='/exp8'){
-        res.end(exp8);
-    }
-    else if(pathName ==='/exp9'){
-        res.end(exp9);
-    }
-    else{
-        res.writeHead(404);
-        res.end('Page not found!');
-    }
+app.get('/exp1', function(req, res) {
+    res.setHeader('Content-Type', 'text/plain');
+    const wrappedContent = `<pre>${exp1}</pre>`;
+    res.send(wrappedContent);
 });
 
-const PORT = process.env.PORT || 8000;
-
-
-server.listen(PORT, () => {
-    console.log(`Listening to requests on port ${PORT}`);
+app.get('/exp2', function(req, res) {
+    res.setHeader('Content-Type', 'text/plain');
+    res.send(exp2);
 });
+
+app.get('/exp3', function(req, res) {
+    res.setHeader('Content-Type', 'text/plain');
+    res.send(exp3);
+});
+
+app.get('/exp5', function(req, res) {
+    res.setHeader('Content-Type', 'text/plain');
+    res.send(exp5);
+});
+
+app.get('/exp6', function(req, res) {
+    res.setHeader('Content-Type', 'text/plain');
+    res.send(exp6);
+});
+
+app.get('/exp7', function(req, res) {
+    res.setHeader('Content-Type', 'text/plain');
+    res.send(exp7);
+});
+
+app.get('/exp8', function(req, res) {
+    res.setHeader('Content-Type', 'text/plain');
+    res.send(exp8);
+});
+
+app.get('/exp9', function(req, res) {
+    res.setHeader('Content-Type', 'text/plain');
+    res.send(exp9);
+});
+
+app.listen(3000);
