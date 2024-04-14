@@ -1,0 +1,33 @@
+%{
+#include &lt;stdio.h&gt;
+%}
+DIGIT [0-9]
+LETTER [a-zA-Z_]
+ID {LETTER}({LETTER}|{DIGIT})*
+%%
+&quot;integer&quot; { printf(&quot;Keyword: %s\n&quot;, yytext); }
+&quot;read&quot; { printf(&quot;Keyword: %s\n&quot;, yytext); }
+&quot;if&quot;|&quot;then&quot;|&quot;else&quot;|&quot;while&quot;|&quot;for&quot;|&quot;to&quot;|&quot;step&quot;|&quot;display&quot; { printf(&quot;Keyword: %s\n&quot;,
+yytext); }
+{ID} { printf(&quot;Identifier: %s\n&quot;, yytext); }
+{DIGIT}+ { printf(&quot;Integer: %s\n&quot;, yytext); }
+[;=,(){}] { printf(&quot;%s\n&quot;, yytext); }
+&quot;==&quot; { printf(&quot;Equal\n&quot;); }
+&quot;&gt;=&quot; { printf(&quot;Greater than or equal\n&quot;); }
+&quot;&lt;=&quot; { printf(&quot;Less than or equal\n&quot;); }
+[&gt;&lt;] { printf(&quot;Greater than or Less than\n&quot;); }
+
+%%
+int yywrap(){}
+int main() {
+FILE *fp;
+fp = fopen(&quot;file2.star.txt&quot;, &quot;r&quot;); // Update the filename accordingly
+if (!fp) {
+fprintf(stderr, &quot;Error opening file.\n&quot;);
+return 1;
+}
+yyin = fp; // Set yyin to the file pointer
+yylex();
+fclose(fp); // Close the file when done
+return 0;
+}
